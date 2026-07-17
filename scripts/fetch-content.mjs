@@ -15,7 +15,7 @@
  */
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 
 const REPO = process.env.GITHUB_REPOSITORY ?? "Tabari-Linus/tabari-linus.github.io";
 const ALLOWED_AUTHOR = process.env.CONTENT_AUTHOR ?? "Tabari-Linus";
