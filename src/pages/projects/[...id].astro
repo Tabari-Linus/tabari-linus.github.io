@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../consts';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+const issueUrl = `https://github.com/${SITE.repo}/issues/${d.issue}`;
+---
+
+<Base title={`${d.title} — ${SITE.title}`}>
+  <article>
+    <header class="mb-8">
+      <h1 class="font-[Sora] text-3xl font-bold">{d.title}</h1>
+      <p class="font-mono text-xs text-paper-dim mt-3">{d.stack.join(' · ')}</p>
+      <p class="font-mono text-sm mt-3 flex gap-4">
+        {d.repo && (
+          <a class="text-gold hover:underline" href={`https://github.com/${d.repo}`}>
+            source ↗
+          </a>
+        )}
+        {d.demo && (
+          <a class="text-gold hover:underline" href={d.demo}>
+            live demo ↗
+          </a>
+        )}
+        <a class="text-paper-dim hover:text-gold" href={issueUrl}>issue ↗</a>
+      </p>
+    </header>
+    <div class="prose-issue">
+      <Content />
+    </div>
+  </article>
+</Base>

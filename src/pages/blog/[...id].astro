@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../consts';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const issueUrl = `https://github.com/${SITE.repo}/issues/${post.data.issue}`;
+---
+
+<Base title={`${post.data.title} — ${SITE.title}`}>
+  <article>
+    <header class="mb-8">
+      <h1 class="font-[Sora] text-3xl font-bold">{post.data.title}</h1>
+      <p class="font-mono text-xs text-paper-dim mt-3">
+        {post.data.date.toISOString().slice(0, 10)}
+        {post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+        · <a class="text-gold hover:underline" href={issueUrl}>discuss on GitHub</a>
+      </p>
+    </header>
+    <div class="prose-issue">
+      <Content />
+    </div>
+  </article>
+</Base>

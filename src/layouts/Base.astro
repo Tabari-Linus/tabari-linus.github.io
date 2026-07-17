@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import { SITE } from '../consts';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = SITE.tagline } = Astro.props;
+
+const nav = [
+  { href: '/', label: 'home' },
+  { href: '/projects/', label: 'projects' },
+  { href: '/blog/', label: 'blog' },
+];
+const current = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-gold focus:text-ink-950 focus:px-3 focus:py-1 focus:rounded"
+      >Skip to content</a
+    >
+
+    <header class="border-b border-ink-700">
+      <nav
+        class="mx-auto max-w-3xl px-5 py-4 flex items-center justify-between font-mono text-sm"
+        aria-label="Primary"
+      >
+        <a href="/" class="text-paper hover:text-gold transition-colors">
+          <span class="text-gold">~/</span>linus-tabari
+        </a>
+        <ul class="flex gap-5">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={current === item.href ? 'page' : undefined}
+                  class:list={[
+                    'transition-colors hover:text-gold',
+                    current === item.href ? 'text-gold' : 'text-paper-dim',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main" class="flex-1 mx-auto w-full max-w-3xl px-5 py-12">
+      <slot />
+    </main>
+
+    <footer class="border-t border-ink-700">
+      <div
+        class="mx-auto max-w-3xl px-5 py-6 flex flex-wrap gap-4 justify-between font-mono text-xs text-paper-dim"
+      >
+        <span>© {new Date().getFullYear()} {SITE.title} · {SITE.location}</span>
+        <span class="flex gap-4">
+          <a class="hover:text-gold" href={SITE.github}>github</a>
+          <a class="hover:text-gold" href={SITE.linkedin}>linkedin</a>
+          <a class="hover:text-gold" href={`mailto:${SITE.email}`}>email</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
