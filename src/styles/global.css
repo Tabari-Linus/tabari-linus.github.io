@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/* Design tokens — "ledger" system:
+   paper/ink neutrals, ledger-green primary, gold micro-accent. */
+@theme {
+  --color-paper: #f6f7f4;
+  --color-ink: #1a1f1c;
+  --color-ink-soft: #4b544f;
+  --color-line: #dfe3dd;
+  --color-ledger: #1e5a3c;
+  --color-ledger-bright: #2e8b5f;
+  --color-gold: #c99b2f;
+
+  --color-paper-dark: #0f1512;
+  --color-ink-dark: #e7ece8;
+  --color-ink-soft-dark: #9aa69f;
+  --color-line-dark: #26302a;
+  --color-ledger-dark: #58bd8b;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  @apply bg-paper text-ink font-body antialiased;
+}
+.dark body {
+  @apply bg-paper-dark text-ink-dark;
+}
+
+/* Ledger rail: mono metadata used as a structural device. */
+.ledger-label {
+  @apply font-mono text-xs uppercase tracking-[0.18em] text-ink-soft;
+}
+.dark .ledger-label {
+  @apply text-ink-soft-dark;
+}
+
+.rule {
+  @apply border-t border-line;
+}
+.dark .rule {
+  @apply border-line-dark;
+}
+
+/* Prose defaults for issue-sourced Markdown. */
+.prose-ledger {
+  @apply max-w-none leading-relaxed;
+}
+.prose-ledger h2 {
+  @apply font-display text-2xl mt-10 mb-3;
+}
+.prose-ledger h3 {
+  @apply font-display text-xl mt-8 mb-2;
+}
+.prose-ledger p {
+  @apply my-4;
+}
+.prose-ledger a {
+  @apply text-ledger underline underline-offset-2;
+}
+.dark .prose-ledger a {
+  @apply text-ledger-dark;
+}
+.prose-ledger ul {
+  @apply list-disc pl-6 my-4;
+}
+.prose-ledger ol {
+  @apply list-decimal pl-6 my-4;
+}
+.prose-ledger pre {
+  @apply my-5 rounded-lg p-4 overflow-x-auto text-sm;
+}
+.prose-ledger code:not(pre code) {
+  @apply font-mono text-[0.9em] px-1 py-0.5 rounded bg-line/60;
+}
+.dark .prose-ledger code:not(pre code) {
+  @apply bg-line-dark;
+}
+.prose-ledger img {
+  @apply my-6 rounded-lg border border-line;
+}
+.dark .prose-ledger img {
+  @apply border-line-dark;
+}
+.prose-ledger blockquote {
+  @apply border-l-2 border-ledger pl-4 my-5 text-ink-soft;
+}
+.dark .prose-ledger blockquote {
+  @apply border-ledger-dark text-ink-soft-dark;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ledger);
+  outline-offset: 2px;
+}
+.dark :focus-visible {
+  outline-color: var(--color-ledger-dark);
+}

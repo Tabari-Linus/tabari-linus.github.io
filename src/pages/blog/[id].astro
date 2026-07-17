@@ -1,0 +1,31 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import { SITE } from "../../consts";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title}>
+  <article>
+    <p class="ledger-label mb-3">
+      <time>{post.data.date.toISOString().slice(0, 10)}</time>
+      {post.data.tags.length > 0 && <> · {post.data.tags.join(" · ")}</>}
+    </p>
+    <h1 class="font-display text-4xl font-semibold leading-tight">{post.data.title}</h1>
+    <div class="prose-ledger mt-8">
+      <Content />
+    </div>
+    <p class="rule mt-12 pt-6">
+      <a class="ledger-label hover:text-ledger dark:hover:text-ledger-dark" href={`https://github.com/${SITE.repo}/issues/${post.data.issue}`}>
+        Discuss on GitHub → issue #{post.data.issue}
+      </a>
+    </p>
+  </article>
+</Base>

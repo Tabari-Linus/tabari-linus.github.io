@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Projects — Linus Tabari" description="Selected backend, ML, and full-stack projects.">
+  <h1 class="font-[Sora] text-3xl font-bold mb-8">Projects</h1>
+  {
+    projects.length === 0 ? (
+      <p class="text-paper-dim">
+        Projects are published by opening a GitHub issue labeled{' '}
+        <code class="font-mono text-gold">project</code>.
+      </p>
+    ) : (
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {projects.map((p) => (
+          <li class="border border-ink-700 rounded-lg p-5 bg-ink-900 flex flex-col">
+            <a href={`/projects/${p.id}/`} class="font-[Sora] font-semibold hover:text-gold">
+              {p.data.title}
+            </a>
+            <p class="font-mono text-xs text-paper-dim mt-3">{p.data.stack.join(' · ')}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>

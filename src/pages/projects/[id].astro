@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((p) => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, repo, demo, stack } = project.data;
+---
+
+<Base title={title}>
+  <article>
+    <p class="ledger-label mb-3">Case study</p>
+    <h1 class="font-display text-4xl font-semibold leading-tight">{title}</h1>
+    {stack.length > 0 && (
+      <p class="font-mono text-sm text-ink-soft dark:text-ink-soft-dark mt-3">{stack.join(" · ")}</p>
+    )}
+    <div class="mt-5 flex gap-4">
+      {repo && <a href={`https://github.com/${repo}`} class="ledger-label text-ledger dark:text-ledger-dark underline underline-offset-4">Source code</a>}
+      {demo && <a href={demo} class="ledger-label text-ledger dark:text-ledger-dark underline underline-offset-4">Live demo</a>}
+    </div>
+    <div class="prose-ledger mt-8">
+      <Content />
+    </div>
+  </article>
+</Base>

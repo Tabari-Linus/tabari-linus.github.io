@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../consts';
+import { getCollection } from 'astro:content';
+
+const featured = (await getCollection('projects', (p) => p.data.featured)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const posts = (await getCollection('blog', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base title={`${SITE.title} — ${SITE.role}`}>
+  <section class="py-8">
+    <p class="font-mono text-sm text-gold mb-3">// backend engineer · kumasi, ghana</p>
+    <h1 class="font-[Sora] text-4xl sm:text-5xl font-bold leading-tight">
+      I build the systems behind the screen.
+    </h1>
+    <p class="mt-5 text-paper-dim max-w-xl leading-relaxed">{SITE.tagline}</p>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class="py-8" aria-labelledby="featured-h">
+        <h2 id="featured-h" class="font-mono text-sm text-gold mb-4">
+          // featured projects
+        </h2>
+        <ul class="grid gap-4">
+          {featured.map((p) => (
+            <li class="border border-ink-700 rounded-lg p-5 bg-ink-900">
+              <a href={`/projects/${p.id}/`} class="font-[Sora] font-semibold hover:text-gold">
+                {p.data.title}
+              </a>
+              <p class="font-mono text-xs text-paper-dim mt-3">{p.data.stack.join(' · ')}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    posts.length > 0 && (
+      <section class="py-8" aria-labelledby="writing-h">
+        <h2 id="writing-h" class="font-mono text-sm text-gold mb-4">
+          // recent writing
+        </h2>
+        <ul class="grid gap-3">
+          {posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}/`} class="hover:text-gold">
+                {post.data.title}
+              </a>
+              <span class="font-mono text-xs text-paper-dim ml-2">
+                {post.data.date.toISOString().slice(0, 10)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>
