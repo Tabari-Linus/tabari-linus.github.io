@@ -1,55 +1,67 @@
 # tabari-linus.github.io
 
-Personal portfolio + blog. Astro + Tailwind, deployed to GitHub Pages.
-Content (blog posts and projects) is authored as **GitHub Issues** in this
-repo and synced into the site at build time.
+Portfolio and blog for **Linus Tabari** — Backend Engineer, Kumasi.
 
-## How publishing works
+**Stack:** React 19 + Tailwind CSS v4 + Vite · deployed to GitHub Pages · GitHub API as the content backend.
 
-| Action | Result |
-|---|---|
-| Open an issue labeled `blog` | New blog post (extra labels become tags) |
-| Open an issue labeled `project` with a leading ```` ```yaml ```` block | New project page |
-| Edit the issue | Post/project updates on next sync |
-| Close the issue | Content is unpublished |
+## Architecture
 
-Images: drag them into the issue body — GitHub hosts them.
-**Only issues authored by the repo owner are published** (enforced in both
-the workflow gate and `scripts/fetch-content.mjs`).
+```
+┌────────────────────────────────────────────────────────┐
+│  React SPA (Vite build → static files on Pages)        │
+│                                                        │
+│  Public routes: /, /projects, /blog, and details       │
+│  Admin route:   /admin (PAT-gated, in-browser only)    │
+│                                                        │
+│  Content served from /public/content/                  │
+│    · manifest.json (index)                             │
+│    · blog/*.md  (posts)                                │
+│    · projects/*.md  (case studies)                     │
+│    · assets/*  (uploaded images)                       │
+└────────────────────────────────────────────────────────┘
+                          ▲
+                          │ (writes)
+┌────────────────────────────────────────────────────────┐
+│  Admin form (in your browser)                          │
+│    · Auth: fine-grained PAT in localStorage            │
+│    · Writes .md + updates manifest via Contents API    │
+│    · Opens a tracker Issue via Issues API              │
+│    · Uploads images to /content/assets/                │
+└────────────────────────────────────────────────────────┘
+                          ▲
+                          │ push
+┌────────────────────────────────────────────────────────┐
+│  GitHub Actions (.github/workflows/deploy.yml)         │
+│    · on push → npm run build → deploy to Pages         │
+└────────────────────────────────────────────────────────┘
+```
 
-### Project issue format
+## First-time setup
 
-    ```yaml
-    description: One-line summary shown on cards
-    repo: Tabari-Linus/snap-service
-    demo: https://example.com
-    stack: [Spring Boot, Kafka, PostgreSQL]
-    featured: true
-    order: 1
-    ```
-    ## Overview
-    Case study body in Markdown...
+1. Push this repo to `github.com/<you>/<you>.github.io`.
+2. **Settings → Pages → Source: GitHub Actions**.
+3. Wait for the first deploy to go green.
+4. Visit `https://<you>.github.io/admin`.
+5. Create a fine-grained PAT:
+   - GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens
+   - Repository access: only this repo
+   - Permissions: Contents (RW), Issues (RW), Metadata (R)
+6. Paste it into the admin sign-in. It stays in your browser's localStorage.
 
-## Pipeline
+## Publishing
 
-- `.github/workflows/deploy.yml` — push to `main` → sync content → build → deploy to Pages
-- `.github/workflows/content-sync.yml` — issue opened/edited/labeled/closed → same pipeline
-- `scripts/fetch-content.mjs` — GitHub Issues → `src/content/{blog,projects}/*.md`
+- **New post/project** → Admin → fill form → Publish. Site rebuilds in ~1 min.
+- **Images** → drop in the "+ Image" input in the editor; they upload to `/content/assets/`.
+- **Delete** → Admin → Existing content.
+- Every publish opens a tracking Issue (`blog-tracker` / `project-tracker` label) for reference.
 
-## Setup (one-time)
-
-1. Create repo `tabari-linus.github.io`, push this code to `main`.
-2. Repo Settings → Pages → Source: **GitHub Actions**.
-3. Create labels `blog` and `project`.
-4. Open your first `blog` issue — the site rebuilds itself.
-
-## Local dev
+## Local development
 
 ```bash
 npm install
-npm run dev            # http://localhost:4321
-GITHUB_TOKEN=<pat> npm run sync-content   # pull real issue content locally
+npm run dev
 ```
 
-Sample content under `src/content/` lets the site build before the first
-real issue exists; the first sync replaces it.
+## Customization
+
+`src/config.ts` — name, tagline, socials, GitHub identity. Everything derives from there.

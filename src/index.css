@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm & professional — Ashanti-adjacent palette. Not the AI-cliché cream+terracotta. */
+  --color-paper: #FBF7EF;
+  --color-paper-2: #F3ECDD;
+  --color-ink: #2B2018;
+  --color-ink-soft: #6B5B4B;
+  --color-brass: #B87A3D;      /* primary accent — kente-warp gold */
+  --color-brass-deep: #8E5A24;
+  --color-teal: #3D6E68;       /* verdigris — grounded secondary */
+  --color-brick: #A3543E;      /* rare punctuation */
+  --color-rule: #E3D9C4;
+  --color-rule-soft: #ECE4D2;
+
+  /* Dark mode (evening reading) */
+  --color-paper-dk: #1A1410;
+  --color-paper-2-dk: #241C16;
+  --color-ink-dk: #F3EBD9;
+  --color-ink-soft-dk: #A8998A;
+  --color-rule-dk: #3A2E24;
+
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Baseline */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  @apply bg-paper text-ink font-body antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+.dark body { background: var(--color-paper-dk); color: var(--color-ink-dk); }
+
+/* Signature: kente-inspired warp rule.
+   A thin gold line with two hairline satellite lines, evoking the geometry of a warp thread. */
+.kente-rule {
+  height: 3px;
+  background:
+    linear-gradient(to right, transparent, var(--color-brass) 15%, var(--color-brass) 85%, transparent);
+  position: relative;
+}
+.kente-rule::before,
+.kente-rule::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-brass-deep) 20%, var(--color-brass-deep) 80%, transparent);
+  opacity: 0.5;
+}
+.kente-rule::before { top: -4px; }
+.kente-rule::after { bottom: -4px; }
+
+/* A short vertical accent used beside hero elements */
+.kente-warp {
+  width: 3px;
+  background: var(--color-brass);
+  position: relative;
+}
+.kente-warp::before, .kente-warp::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 1px;
+  background: var(--color-brass-deep); opacity: 0.5;
+}
+.kente-warp::before { left: -4px; }
+.kente-warp::after  { right: -4px; }
+
+/* Reading-optimized prose for blog + project detail */
+.prose-warm {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-ink);
+  max-width: 65ch;
+}
+.dark .prose-warm { color: var(--color-ink-dk); }
+
+.prose-warm h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.15;
+  font-style: italic;
+  margin: 2.5rem 0 0.75rem;
+  color: var(--color-ink);
+}
+.dark .prose-warm h2 { color: var(--color-ink-dk); }
+
+.prose-warm h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-style: italic;
+  margin: 2rem 0 0.5rem;
+}
+
+.prose-warm p { margin: 1rem 0; }
+.prose-warm a { color: var(--color-brass-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.dark .prose-warm a { color: var(--color-brass); }
+.prose-warm a:hover { color: var(--color-brick); }
+
+.prose-warm ul { list-style: disc; padding-left: 1.5rem; margin: 1rem 0; }
+.prose-warm ol { list-style: decimal; padding-left: 1.5rem; margin: 1rem 0; }
+.prose-warm li { margin: 0.35rem 0; }
+
+.prose-warm blockquote {
+  border-left: 3px solid var(--color-brass);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--color-ink-soft);
+}
+.dark .prose-warm blockquote { color: var(--color-ink-soft-dk); }
+
+.prose-warm code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  background: var(--color-paper-2);
+  border-radius: 0.3em;
+  color: var(--color-brass-deep);
+}
+.dark .prose-warm code:not(pre code) { background: var(--color-paper-2-dk); color: var(--color-brass); }
+
+.prose-warm pre {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+}
+
+.prose-warm img {
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-rule);
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Utilities used by components */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-brass-deep);
+  font-weight: 500;
+}
+.dark .eyebrow { color: var(--color-brass); }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  border-radius: 999px;
+  background: var(--color-paper-2);
+  color: var(--color-ink-soft);
+  border: 1px solid var(--color-rule);
+}
+.dark .chip { background: var(--color-paper-2-dk); color: var(--color-ink-soft-dk); border-color: var(--color-rule-dk); }

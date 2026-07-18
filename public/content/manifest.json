@@ -1,0 +1,44 @@
+{
+  "posts": [
+    {
+      "slug": "hello-world",
+      "title": "Hello, world",
+      "date": "2026-07-17T00:00:00Z",
+      "excerpt": "First entry — a note about why this site exists and what to expect from it.",
+      "tags": ["meta"]
+    }
+  ],
+  "projects": [
+    {
+      "slug": "snap-service",
+      "title": "Snap Service",
+      "date": "2026-01-15T00:00:00Z",
+      "summary": "Proximity-based service marketplace connecting seekers with local providers — 10K+ users on AWS with blue-green deployments.",
+      "stack": ["Spring Boot", "Spring Cloud Gateway", "PostgreSQL", "PostGIS", "WebSocket", "AWS ECS", "Docker"],
+      "repo": "Tabari-Linus/snap-service",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "slug": "bytebites",
+      "title": "ByteBites",
+      "date": "2025-11-01T00:00:00Z",
+      "summary": "Event-driven food delivery platform where Kafka orchestrates the order lifecycle from placement to doorstep.",
+      "stack": ["Spring Boot", "Apache Kafka", "PostgreSQL", "Docker"],
+      "repo": "Tabari-Linus/bytebites",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "slug": "recruitment-platform",
+      "title": "Recruitment Platform",
+      "date": "2025-08-01T00:00:00Z",
+      "summary": "Full-stack hiring workflow with four roles, interview scheduling, and project submissions — my role: backend.",
+      "stack": ["Spring Boot", "AngularJS", "PostgreSQL", "Spring Security", "JWT"],
+      "repo": "Tabari-Linus/recruitment-platform",
+      "featured": true,
+      "order": 3
+    }
+  ],
+  "updatedAt": "2026-07-17T00:00:00Z"
+}

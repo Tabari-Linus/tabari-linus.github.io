@@ -5,7 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Least-privilege: only what Pages deployment needs.
 permissions:
   contents: read
   pages: write
@@ -20,22 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
       - run: npm ci
-
-      # Pull latest blog/project issues at build time so a plain
-      # push also refreshes content.
-      - run: npm run sync-content
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - run: npm run build
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
