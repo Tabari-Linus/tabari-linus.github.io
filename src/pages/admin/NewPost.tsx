@@ -22,25 +22,14 @@ export default function NewPost() {
   }
 
   async function onCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    try {
-      const path = await uploadAsset(f);
-      setCover(path);
-    } catch (err: any) {
-      alert(`Upload failed: ${err.message}`);
-    }
+    const f = e.target.files?.[0]; if (!f) return;
+    try { setCover(await uploadAsset(f)); }
+    catch (err: any) { alert(err.message); }
   }
-
   async function insertImage(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    try {
-      const path = await uploadAsset(f);
-      setBody((b) => `${b}\n\n![${f.name}](${path})\n`);
-    } catch (err: any) {
-      alert(`Upload failed: ${err.message}`);
-    }
+    const f = e.target.files?.[0]; if (!f) return;
+    try { const p = await uploadAsset(f); setBody((b) => `${b}\n\n![${f.name}](${p})\n`); }
+    catch (err: any) { alert(err.message); }
   }
 
   async function submit(e: React.FormEvent) {
@@ -58,11 +47,7 @@ export default function NewPost() {
         cover: cover || undefined,
         body,
       });
-      setResult({
-        ok: true,
-        message: `Published — commit is queued. Site will rebuild in ~1 min.`,
-        issueUrl,
-      });
+      setResult({ ok: true, message: "Published. Site rebuilds in ~1 min.", issueUrl });
       setTitle(""); setSlug(""); setExcerpt(""); setBody(""); setTags(""); setCover("");
       setSlugTouched(false);
     } catch (err: any) {
@@ -76,21 +61,13 @@ export default function NewPost() {
     <form onSubmit={submit} className="space-y-6">
       <div className="grid md:grid-cols-2 gap-4">
         <Field label="Title">
-          <input
-            required
-            value={title}
-            onChange={(e) => updateTitle(e.target.value)}
-            className={inputCls}
-            placeholder="A post title"
-          />
+          <input required value={title} onChange={(e) => updateTitle(e.target.value)}
+            className={inputCls} placeholder="A post title" />
         </Field>
-        <Field label="Slug" hint="URL segment; auto-generated from title.">
-          <input
-            required
-            value={slug}
+        <Field label="Slug" hint="URL segment — auto from title.">
+          <input required value={slug}
             onChange={(e) => { setSlug(slugify(e.target.value)); setSlugTouched(true); }}
-            className={`${inputCls} font-mono text-sm`}
-          />
+            className={`${inputCls} font-mono text-sm`} />
         </Field>
       </div>
 
@@ -99,60 +76,46 @@ export default function NewPost() {
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
         </Field>
         <Field label="Tags" hint="Comma-separated.">
-          <input value={tags} onChange={(e) => setTags(e.target.value)} className={inputCls} placeholder="spring-boot, kafka" />
+          <input value={tags} onChange={(e) => setTags(e.target.value)}
+            className={inputCls} placeholder="spring-boot, kafka" />
         </Field>
       </div>
 
-      <Field label="Excerpt" hint="One-line summary shown on the blog index.">
+      <Field label="Excerpt" hint="Shown on the blog index.">
         <input value={excerpt} onChange={(e) => setExcerpt(e.target.value)} className={inputCls} />
       </Field>
 
-      <Field label="Cover image (optional)" hint="Uploads to /content/assets/ and commits.">
+      <Field label="Cover image (optional)">
         <div className="flex items-center gap-3">
-          <input type="file" accept="image/*" onChange={onCoverUpload} className="text-sm" />
-          {cover && <code className="text-xs font-mono text-brass-deep dark:text-brass">{cover}</code>}
+          <input type="file" accept="image/*" onChange={onCoverUpload} className="text-sm text-soft" />
+          {cover && <code className="text-xs font-mono text-mint">{cover}</code>}
         </div>
       </Field>
 
       <Field label="Body (Markdown)">
         <div className="flex gap-2 mb-2">
-          <button type="button" onClick={() => setPreview(false)}
-            className={tabCls(!preview)}>Write</button>
-          <button type="button" onClick={() => setPreview(true)}
-            className={tabCls(preview)}>Preview</button>
-          <label className="ml-auto text-xs text-ink-soft dark:text-ink-soft-dk cursor-pointer flex items-center gap-2 border border-rule dark:border-rule-dk rounded-md px-2 py-1 hover:border-brass">
+          <button type="button" onClick={() => setPreview(false)} className={tabCls(!preview)}>Write</button>
+          <button type="button" onClick={() => setPreview(true)} className={tabCls(preview)}>Preview</button>
+          <label className="ml-auto text-xs text-soft cursor-pointer flex items-center gap-2 border border-line rounded-md px-3 py-1 hover:border-mint hover:text-mint transition-colors">
             + Image
             <input type="file" accept="image/*" onChange={insertImage} className="hidden" />
           </label>
         </div>
         {preview ? (
-          <div className="min-h-[24rem] p-4 rounded-md border border-rule dark:border-rule-dk bg-paper-2/40 dark:bg-paper-2-dk/40">
+          <div className="min-h-96 p-5 rounded-md border border-line bg-surface">
             <Markdown>{body || "*Nothing to preview yet.*"}</Markdown>
           </div>
         ) : (
-          <textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            className={`${inputCls} font-mono text-sm min-h-[24rem]`}
-            placeholder="## Introduction&#10;&#10;Write your post in Markdown…"
-          />
+          <textarea value={body} onChange={(e) => setBody(e.target.value)}
+            className={`${inputCls} font-mono text-sm min-h-96`}
+            placeholder="## Introduction\n\nWrite your post in Markdown…" />
         )}
       </Field>
 
-      {result && (
-        <div className={`p-4 rounded-md border ${result.ok ? "border-teal text-teal" : "border-brick text-brick"}`}>
-          <p className="font-medium">{result.message}</p>
-          {result.issueUrl && (
-            <a href={result.issueUrl} className="text-xs underline mt-1 inline-block" target="_blank" rel="noreferrer">
-              Tracking issue →
-            </a>
-          )}
-        </div>
-      )}
+      {result && <Alert result={result} />}
 
-      <div className="flex gap-3 pt-2 border-t border-rule dark:border-rule-dk pt-6">
-        <button type="submit" disabled={busy || !title}
-          className="px-5 py-2.5 rounded-md bg-ink text-paper dark:bg-brass dark:text-ink font-medium hover:opacity-90 disabled:opacity-50">
+      <div className="border-t border-line pt-6">
+        <button type="submit" disabled={busy || !title} className="btn-primary disabled:opacity-50">
           {busy ? "Publishing…" : "Publish post"}
         </button>
       </div>
@@ -161,19 +124,31 @@ export default function NewPost() {
 }
 
 const inputCls =
-  "w-full px-3 py-2 rounded-md border border-rule dark:border-rule-dk bg-paper dark:bg-paper-dk focus:border-brass outline-none transition-colors";
-
+  "w-full px-4 py-2.5 rounded-md border border-line bg-surface text-body focus:border-mint outline-none transition-colors";
 const tabCls = (active: boolean) =>
-  `px-3 py-1 rounded-md text-sm font-medium ${
-    active ? "bg-ink text-paper dark:bg-brass dark:text-ink" : "text-ink-soft dark:text-ink-soft-dk hover:text-ink"
+  `px-3 py-1.5 rounded-md text-sm font-mono transition-colors ${
+    active ? "bg-mint text-black" : "text-soft hover:text-body border border-line"
   }`;
 
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1">{label}</label>
+      <label className="block text-xs font-mono uppercase tracking-wider text-mute mb-2">{label}</label>
       {children}
-      {hint && <p className="text-xs text-ink-soft dark:text-ink-soft-dk mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-mute mt-1.5">{hint}</p>}
+    </div>
+  );
+}
+
+function Alert({ result }: { result: { ok: boolean; message: string; issueUrl?: string } }) {
+  return (
+    <div className={`p-4 rounded-md border ${result.ok ? "border-mint/50 bg-mint/5 text-mint" : "border-red-500/50 bg-red-500/10 text-red-400"}`}>
+      <p className="font-mono text-sm font-medium">{result.message}</p>
+      {result.issueUrl && (
+        <a href={result.issueUrl} target="_blank" rel="noreferrer" className="text-xs underline mt-1 inline-block">
+          Tracking issue →
+        </a>
+      )}
     </div>
   );
 }

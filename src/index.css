@@ -1,31 +1,48 @@
 @import "tailwindcss";
 
+/*
+  DESIGN SYSTEM — dark-first developer portfolio
+  Contrast is the point. Every text color is measured against its background.
+  Body text hits at minimum 7:1 (AAA), UI labels 4.5:1 (AA).
+*/
+
 @theme {
-  /* Warm & professional — Ashanti-adjacent palette. Not the AI-cliché cream+terracotta. */
-  --color-paper: #FBF7EF;
-  --color-paper-2: #F3ECDD;
-  --color-ink: #2B2018;
-  --color-ink-soft: #6B5B4B;
-  --color-brass: #B87A3D;      /* primary accent — kente-warp gold */
-  --color-brass-deep: #8E5A24;
-  --color-teal: #3D6E68;       /* verdigris — grounded secondary */
-  --color-brick: #A3543E;      /* rare punctuation */
-  --color-rule: #E3D9C4;
-  --color-rule-soft: #ECE4D2;
+  /* Backgrounds — near-black with subtle warmth (not sterile blue-gray) */
+  --color-bg: #0a0a0b;              /* base */
+  --color-bg-1: #111114;            /* cards */
+  --color-bg-2: #18181c;            /* elevated */
+  --color-bg-3: #23232a;            /* hover */
 
-  /* Dark mode (evening reading) */
-  --color-paper-dk: #1A1410;
-  --color-paper-2-dk: #241C16;
-  --color-ink-dk: #F3EBD9;
-  --color-ink-soft-dk: #A8998A;
-  --color-rule-dk: #3A2E24;
+  /* Borders */
+  --color-line: #26262d;
+  --color-line-strong: #3a3a44;
 
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  /* Text — measured on --color-bg */
+  --color-text: #f4f4f6;            /* 18.5:1 — body */
+  --color-text-soft: #b8b8c2;       /* 9.5:1  — secondary */
+  --color-text-mute: #7d7d88;       /* 4.9:1  — labels/metadata */
+
+  /* Accent — mint (money moves through) */
+  --color-mint: #34d399;            /* emerald 400 */
+  --color-mint-glow: rgba(52,211,153,0.12);
+  --color-mint-deep: #10b981;
+
+  /* Light mode counterparts */
+  --color-bg-l: #ffffff;
+  --color-bg-1-l: #f7f7f8;
+  --color-bg-2-l: #eeeef1;
+  --color-line-l: #e4e4e9;
+  --color-line-strong-l: #c9c9d2;
+  --color-text-l: #0a0a0b;
+  --color-text-soft-l: #414150;
+  --color-text-mute-l: #6a6a76;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(:not(.dark), :not(.dark) *));
 
 /* Baseline */
 html { scroll-behavior: smooth; }
@@ -37,144 +54,301 @@ html { scroll-behavior: smooth; }
   }
 }
 
+html.dark  body { background: var(--color-bg);   color: var(--color-text); }
+html:not(.dark) body { background: var(--color-bg-l); color: var(--color-text-l); }
+
 body {
-  @apply bg-paper text-ink font-body antialiased;
-  font-feature-settings: "ss01", "cv11";
+  font-family: var(--font-body);
+  font-weight: 450;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
 }
-.dark body { background: var(--color-paper-dk); color: var(--color-ink-dk); }
 
-/* Signature: kente-inspired warp rule.
-   A thin gold line with two hairline satellite lines, evoking the geometry of a warp thread. */
-.kente-rule {
-  height: 3px;
-  background:
-    linear-gradient(to right, transparent, var(--color-brass) 15%, var(--color-brass) 85%, transparent);
-  position: relative;
+::selection { background: var(--color-mint); color: var(--color-bg); }
+
+:focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
-.kente-rule::before,
-.kente-rule::after {
+
+/* Utility text classes */
+.text-body { color: var(--color-text); }
+.text-soft { color: var(--color-text-soft); }
+.text-mute { color: var(--color-text-mute); }
+html:not(.dark) .text-body { color: var(--color-text-l); }
+html:not(.dark) .text-soft { color: var(--color-text-soft-l); }
+html:not(.dark) .text-mute { color: var(--color-text-mute-l); }
+
+.bg-base     { background: var(--color-bg); }
+.bg-surface  { background: var(--color-bg-1); }
+.bg-elevated { background: var(--color-bg-2); }
+html:not(.dark) .bg-base     { background: var(--color-bg-l); }
+html:not(.dark) .bg-surface  { background: var(--color-bg-1-l); }
+html:not(.dark) .bg-elevated { background: var(--color-bg-2-l); }
+
+.border-line        { border-color: var(--color-line); }
+.border-line-strong { border-color: var(--color-line-strong); }
+html:not(.dark) .border-line        { border-color: var(--color-line-l); }
+html:not(.dark) .border-line-strong { border-color: var(--color-line-strong-l); }
+
+/* Eyebrow — mono, small, mint */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.eyebrow::before {
   content: "";
-  position: absolute;
-  left: 0; right: 0;
+  width: 0.5rem;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-brass-deep) 20%, var(--color-brass-deep) 80%, transparent);
-  opacity: 0.5;
+  background: currentColor;
+  display: inline-block;
 }
-.kente-rule::before { top: -4px; }
-.kente-rule::after { bottom: -4px; }
 
-/* A short vertical accent used beside hero elements */
-.kente-warp {
-  width: 3px;
-  background: var(--color-brass);
-  position: relative;
+/* Chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  background: var(--color-bg-2);
+  color: var(--color-text-soft);
+  border: 1px solid var(--color-line);
+  transition: all 0.15s ease;
 }
-.kente-warp::before, .kente-warp::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 1px;
-  background: var(--color-brass-deep); opacity: 0.5;
+.chip:hover {
+  border-color: var(--color-mint);
+  color: var(--color-mint);
 }
-.kente-warp::before { left: -4px; }
-.kente-warp::after  { right: -4px; }
+html:not(.dark) .chip {
+  background: var(--color-bg-1-l);
+  color: var(--color-text-soft-l);
+  border-color: var(--color-line-l);
+}
 
-/* Reading-optimized prose for blog + project detail */
-.prose-warm {
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-mint);
+  color: var(--color-bg);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease;
+}
+.btn-primary:hover {
+  background: var(--color-mint-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -8px var(--color-mint-glow);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-text);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease;
+}
+.btn-secondary:hover {
+  border-color: var(--color-mint);
+  color: var(--color-mint);
+}
+html:not(.dark) .btn-secondary {
+  color: var(--color-text-l);
+  border-color: var(--color-line-strong-l);
+}
+
+/* Signature — grid dot noise pattern for hero */
+.grid-noise {
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--color-line-strong) 1px, transparent 0);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 30%, black, transparent);
+}
+
+/* Gradient orb (hero glow) */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Scroll-triggered fade-in */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.cursor-blink {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1em;
+  vertical-align: text-bottom;
+  background: var(--color-mint);
+  animation: blink 1s infinite;
+  margin-left: 0.15ch;
+}
+
+/* Marquee (skills scroll) */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* Prose — high contrast reading */
+.prose-dev {
   font-size: 1.0625rem;
   line-height: 1.75;
-  color: var(--color-ink);
-  max-width: 65ch;
+  max-width: 68ch;
+  color: var(--color-text);
 }
-.dark .prose-warm { color: var(--color-ink-dk); }
+html:not(.dark) .prose-dev { color: var(--color-text-l); }
 
-.prose-warm h2 {
+.prose-dev p { margin: 1rem 0; }
+
+.prose-dev h2 {
   font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 1.15;
-  font-style: italic;
-  margin: 2.5rem 0 0.75rem;
-  color: var(--color-ink);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 3rem 0 1rem;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
 }
-.dark .prose-warm h2 { color: var(--color-ink-dk); }
+html:not(.dark) .prose-dev h2 { color: var(--color-text-l); }
 
-.prose-warm h3 {
+.prose-dev h3 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-style: italic;
-  margin: 2rem 0 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 2.25rem 0 0.75rem;
+  letter-spacing: -0.01em;
 }
 
-.prose-warm p { margin: 1rem 0; }
-.prose-warm a { color: var(--color-brass-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.dark .prose-warm a { color: var(--color-brass); }
-.prose-warm a:hover { color: var(--color-brick); }
+.prose-dev a {
+  color: var(--color-mint);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose-dev a:hover { text-decoration-thickness: 2px; }
 
-.prose-warm ul { list-style: disc; padding-left: 1.5rem; margin: 1rem 0; }
-.prose-warm ol { list-style: decimal; padding-left: 1.5rem; margin: 1rem 0; }
-.prose-warm li { margin: 0.35rem 0; }
+.prose-dev ul, .prose-dev ol { padding-left: 1.5rem; margin: 1rem 0; }
+.prose-dev ul { list-style: disc; }
+.prose-dev ol { list-style: decimal; }
+.prose-dev li { margin: 0.4rem 0; }
+.prose-dev li::marker { color: var(--color-mint); }
 
-.prose-warm blockquote {
-  border-left: 3px solid var(--color-brass);
-  padding: 0.25rem 0 0.25rem 1.25rem;
+.prose-dev blockquote {
+  border-left: 3px solid var(--color-mint);
+  padding: 0.5rem 0 0.5rem 1.25rem;
   margin: 1.5rem 0;
-  font-style: italic;
-  color: var(--color-ink-soft);
+  color: var(--color-text-soft);
+  background: var(--color-bg-1);
+  border-radius: 0 0.375rem 0.375rem 0;
 }
-.dark .prose-warm blockquote { color: var(--color-ink-soft-dk); }
+html:not(.dark) .prose-dev blockquote {
+  color: var(--color-text-soft-l);
+  background: var(--color-bg-1-l);
+}
 
-.prose-warm code:not(pre code) {
+.prose-dev code:not(pre code) {
   font-family: var(--font-mono);
-  font-size: 0.9em;
-  padding: 0.15em 0.4em;
-  background: var(--color-paper-2);
+  font-size: 0.88em;
+  padding: 0.15em 0.45em;
+  background: var(--color-bg-2);
+  color: var(--color-mint);
+  border: 1px solid var(--color-line);
   border-radius: 0.3em;
-  color: var(--color-brass-deep);
 }
-.dark .prose-warm code:not(pre code) { background: var(--color-paper-2-dk); color: var(--color-brass); }
+html:not(.dark) .prose-dev code:not(pre code) {
+  background: var(--color-bg-1-l);
+  border-color: var(--color-line-l);
+}
 
-.prose-warm pre {
-  background: var(--color-ink);
-  color: var(--color-paper);
-  padding: 1rem 1.25rem;
-  border-radius: 0.5rem;
+.prose-dev pre {
+  background: var(--color-bg-1);
+  border: 1px solid var(--color-line);
+  padding: 1.15rem 1.35rem;
+  border-radius: 0.6rem;
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: 0.875rem;
   line-height: 1.6;
-  margin: 1.5rem 0;
+  margin: 1.75rem 0;
+  color: var(--color-text);
 }
+html:not(.dark) .prose-dev pre {
+  background: #0a0a0b;
+  color: #f4f4f6;
+}
+.prose-dev pre code { background: none; border: none; padding: 0; color: inherit; }
 
-.prose-warm img {
+.prose-dev img {
   border-radius: 0.5rem;
-  margin: 1.5rem 0;
-  border: 1px solid var(--color-rule);
+  margin: 1.75rem 0;
+  border: 1px solid var(--color-line);
 }
 
-/* Focus */
-:focus-visible {
-  outline: 2px solid var(--color-brass);
-  outline-offset: 3px;
-  border-radius: 2px;
+.prose-dev hr {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin: 2.5rem 0;
 }
 
-/* Utilities used by components */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-brass-deep);
-  font-weight: 500;
+/* Card lift */
+.card-lift {
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-.dark .eyebrow { color: var(--color-brass); }
+.card-lift:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-mint);
+}
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.15rem 0.55rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  border-radius: 999px;
-  background: var(--color-paper-2);
-  color: var(--color-ink-soft);
-  border: 1px solid var(--color-rule);
-}
-.dark .chip { background: var(--color-paper-2-dk); color: var(--color-ink-soft-dk); border-color: var(--color-rule-dk); }
+/* Container */
+.container-narrow { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+@media (min-width: 768px) { .container-narrow { padding: 0 2rem; } }
+
+/* Type utilities */
+.font-display { font-family: var(--font-display); font-feature-settings: "ss01"; }
+.font-mono    { font-family: var(--font-mono); }
+.text-mint    { color: var(--color-mint); }
+.bg-mint      { background: var(--color-mint); }
+.border-mint  { border-color: var(--color-mint); }

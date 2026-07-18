@@ -1,26 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { loadManifest } from "../lib/content";
 import type { Manifest } from "../types";
 import PostRow from "../components/PostRow";
+import Reveal from "../components/Reveal";
 
 export default function Blog() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
+  const [tag, setTag] = useState<string | null>(null);
   useEffect(() => { loadManifest().then(setManifest); }, []);
   const posts = manifest?.posts ?? [];
+  const tags = useMemo(() => Array.from(new Set(posts.flatMap((p) => p.tags ?? []))), [posts]);
+  const filtered = tag ? posts.filter((p) => p.tags?.includes(tag)) : posts;
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
-      <header className="mb-8">
-        <p className="eyebrow mb-3">Writing</p>
-        <h1 className="font-display text-5xl sm:text-6xl italic text-ink dark:text-ink-dk">From the desk.</h1>
-        <p className="mt-4 text-ink-soft dark:text-ink-soft-dk">
-          Notes on backend engineering, distributed systems, and teaching people to code.
-        </p>
-      </header>
-      {posts.length === 0 ? (
-        <p className="text-ink-soft dark:text-ink-soft-dk mt-8">First post coming soon.</p>
+    <div className="container-narrow py-20 sm:py-28 max-w-3xl">
+      <Reveal>
+        <header className="mb-12">
+          <p className="eyebrow mb-5">Writing</p>
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-bold text-body tracking-tight leading-[1.05]">
+            Notes.
+          </h1>
+          <p className="mt-6 text-lg text-soft">
+            On backend engineering, distributed systems, and teaching people to code.
+          </p>
+        </header>
+
+        {tags.length > 0 && (
+          <div className="mb-8 flex flex-wrap gap-2">
+            <button
+              onClick={() => setTag(null)}
+              className={`chip ${!tag ? "border-mint text-mint" : ""}`}
+            >
+              All
+            </button>
+            {tags.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTag(t === tag ? null : t)}
+                className={`chip ${t === tag ? "border-mint text-mint" : ""}`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        )}
+      </Reveal>
+
+      {filtered.length === 0 ? (
+        <p className="text-soft mt-8">Nothing here yet.</p>
       ) : (
-        <div>{posts.map((p) => <PostRow key={p.slug} post={p} />)}</div>
+        <div>{filtered.map((p) => <PostRow key={p.slug} post={p} />)}</div>
       )}
     </div>
   );

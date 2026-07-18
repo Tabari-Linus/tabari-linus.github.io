@@ -1,24 +1,27 @@
 import { Link } from "react-router-dom";
 import type { ProjectMeta } from "../types";
 
-export default function ProjectCard({ p }: { p: ProjectMeta }) {
+export default function ProjectCard({ p, index }: { p: ProjectMeta; index?: number }) {
   return (
     <Link
       to={`/projects/${p.slug}`}
-      className="group block p-6 rounded-xl border border-rule dark:border-rule-dk bg-paper-2/40 dark:bg-paper-2-dk/40 hover:border-brass dark:hover:border-brass transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_40px_-15px_rgba(184,122,61,0.4)]"
+      className="card-lift group block bg-surface border border-line rounded-xl p-7 hover:bg-elevated"
     >
-      <div className="flex items-start justify-between gap-4 mb-2">
-        <h3 className="font-display text-2xl italic text-ink dark:text-ink-dk group-hover:text-brass-deep dark:group-hover:text-brass transition-colors">
-          {p.title}
-        </h3>
-        {p.featured && <span className="eyebrow shrink-0 pt-2">Featured</span>}
+      <div className="flex items-start justify-between mb-4">
+        <span className="font-mono text-xs text-mute">
+          {typeof index === "number" ? String(index + 1).padStart(2, "0") : ""}
+        </span>
+        <span className="font-mono text-xs text-mute group-hover:text-mint transition-colors">
+          ↗
+        </span>
       </div>
-      <p className="text-ink-soft dark:text-ink-soft-dk mb-4 leading-relaxed">{p.summary}</p>
+      <h3 className="font-display text-2xl font-semibold text-body mb-3 tracking-tight group-hover:text-mint transition-colors">
+        {p.title}
+      </h3>
+      <p className="text-soft leading-relaxed mb-5 line-clamp-3">{p.summary}</p>
       <div className="flex flex-wrap gap-1.5">
-        {p.stack.slice(0, 5).map((t) => (
-          <span key={t} className="chip">{t}</span>
-        ))}
-        {p.stack.length > 5 && <span className="chip">+{p.stack.length - 5}</span>}
+        {p.stack.slice(0, 4).map((t) => <span key={t} className="chip">{t}</span>)}
+        {p.stack.length > 4 && <span className="chip">+{p.stack.length - 4}</span>}
       </div>
     </Link>
   );

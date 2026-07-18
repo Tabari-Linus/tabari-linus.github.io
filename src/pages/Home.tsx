@@ -2,14 +2,39 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CONFIG } from "../config";
 import { loadManifest } from "../lib/content";
+import { fetchGithubStats, type GithubStats } from "../lib/github-public";
 import type { Manifest } from "../types";
-import KenteRule from "../components/KenteRule";
 import ProjectCard from "../components/ProjectCard";
 import PostRow from "../components/PostRow";
+import Reveal from "../components/Reveal";
+
+const SKILLS = [
+  "Java", "Spring Boot", "Spring Cloud", "Kafka", "PostgreSQL", "PostGIS",
+  "Docker", "AWS ECS", "REST APIs", "JWT", "Spring Security",
+  "Python", "FastAPI", "Django", "TensorFlow", "OpenCV",
+  "Git", "GitHub Actions", "Kubernetes", "Redis", "WebSocket",
+];
 
 export default function Home() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
-  useEffect(() => { loadManifest().then(setManifest); }, []);
+  const [stats, setStats] = useState<GithubStats | null>(null);
+  const [typedTitle, setTypedTitle] = useState("");
+  const fullTitle = "Backend Engineer";
+
+  useEffect(() => {
+    loadManifest().then(setManifest);
+    fetchGithubStats().then(setStats);
+  }, []);
+
+  useEffect(() => {
+    let i = 0;
+    const id = setInterval(() => {
+      if (i > fullTitle.length) { clearInterval(id); return; }
+      setTypedTitle(fullTitle.slice(0, i));
+      i++;
+    }, 60);
+    return () => clearInterval(id);
+  }, []);
 
   const featured = (manifest?.projects ?? [])
     .filter((p) => p.featured)
@@ -18,124 +43,181 @@ export default function Home() {
   const posts = (manifest?.posts ?? []).slice(0, 3);
 
   return (
-    <div className="max-w-5xl mx-auto px-6">
-      {/* Hero — first-person, warm; kente warp accent on the left */}
-      <section className="pt-20 pb-16 sm:pt-28 sm:pb-20 grid grid-cols-[3px_1fr] gap-6 sm:gap-10">
-        <div className="kente-warp" aria-hidden />
-        <div>
-          <p className="eyebrow mb-4">Backend engineer · Kumasi, Ghana</p>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-[1.05] tracking-tight text-ink dark:text-ink-dk">
-            Hello — I'm <span className="italic text-brass-deep dark:text-brass">Linus</span>.
-          </h1>
-          <p className="mt-6 text-lg sm:text-xl leading-relaxed text-ink-soft dark:text-ink-soft-dk max-w-2xl">
-            {CONFIG.tagline}
+    <>
+      {/* HERO — full viewport, animated glow, terminal-inspired */}
+      <section className="relative overflow-hidden">
+        {/* Grid noise pattern */}
+        <div className="absolute inset-0 grid-noise pointer-events-none opacity-30" />
+        {/* Gradient orb */}
+        <div
+          className="hero-glow"
+          style={{ background: "var(--color-mint)", width: 600, height: 600, top: -200, right: -150 }}
+        />
+
+        <div className="container-narrow relative min-h-[85vh] flex flex-col justify-center pt-20 pb-16">
+          <p className="eyebrow mb-6">
+            <span className="font-mono">$ whoami</span>
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/projects"
-              className="inline-flex items-center px-5 py-2.5 rounded-md bg-ink text-paper dark:bg-brass dark:text-ink font-medium hover:opacity-90 transition-opacity"
-            >
-              See my work →
+
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-body leading-[1.02]">
+            Linus <span className="text-mint">Tabari</span>.
+          </h1>
+
+          <p className="mt-8 text-xl sm:text-2xl text-soft font-mono">
+            {typedTitle}
+            <span className="cursor-blink" />
+            <span className="text-mute">  ·  {CONFIG.siteLocation}</span>
+          </p>
+
+          <p className="mt-8 text-lg sm:text-xl text-body max-w-2xl leading-relaxed">
+            I build the quiet infrastructure behind financial products —
+            Spring Boot services that stay standing when parts of them fall over.
+            <span className="text-soft"> Before that, I taught 1,300+ students to write their first algorithms.</span>
+          </p>
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link to="/projects" className="btn-primary">
+              See my work
+              <span aria-hidden>→</span>
             </Link>
-            <a
-              href={`mailto:${CONFIG.socials.email}`}
-              className="inline-flex items-center px-5 py-2.5 rounded-md border border-rule dark:border-rule-dk hover:border-brass dark:hover:border-brass transition-colors"
-            >
-              Say hello
+            <a href={`mailto:${CONFIG.socials.email}`} className="btn-secondary">
+              Get in touch
             </a>
           </div>
-        </div>
-      </section>
 
-      <KenteRule />
-
-      {/* About — brief, personable */}
-      <section className="py-12 grid md:grid-cols-[1fr_2fr] gap-8 md:gap-16">
-        <div>
-          <p className="eyebrow mb-3">About</p>
-          <h2 className="font-display italic text-3xl text-ink dark:text-ink-dk">A short version.</h2>
-        </div>
-        <div className="text-ink-soft dark:text-ink-soft-dk space-y-4 leading-relaxed max-w-xl">
-          <p>
-            I'm a backend engineer at <span className="text-ink dark:text-ink-dk">AmaliTech Ghana</span>, where I build
-            Spring Boot services for financial applications. Before that I finished an MPhil in Computer Science at
-            KNUST and spent a couple of years teaching over 1,300 undergraduates the shape of a well-written algorithm.
-          </p>
-          <p>
-            I care about systems that stay standing when parts of them fall over — clear service boundaries, honest
-            failure modes, and the small architectural decisions that let a team ship on a Tuesday afternoon without
-            holding their breath.
-          </p>
-          <p>
-            Outside work: leading the KNUST IoT Hub chapter, mentoring students on their first hackathon, and
-            occasionally writing about what I'm learning.
-          </p>
-        </div>
-      </section>
-
-      <KenteRule />
-
-      {/* Featured work */}
-      <section className="py-12">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <p className="eyebrow mb-3">Selected work</p>
-            <h2 className="font-display italic text-3xl text-ink dark:text-ink-dk">Things I've built.</h2>
+          {/* Quick stats bar */}
+          <div className="mt-16 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-8">
+            <Stat label="Students taught" value="1,300+" />
+            <Stat label="Users served" value="10K+" />
+            <Stat label="Public repos" value={stats ? String(stats.publicRepos) : "—"} />
+            <Stat label="Years shipping" value="4+" />
           </div>
-          <Link to="/projects" className="text-sm text-brass-deep dark:text-brass hover:underline">
-            All projects →
-          </Link>
         </div>
-
-        {featured.length === 0 ? (
-          <p className="text-ink-soft dark:text-ink-soft-dk">
-            Case studies are being written — everything lives on{" "}
-            <a href={CONFIG.socials.github} className="text-brass-deep dark:text-brass underline">GitHub</a> in the meantime.
-          </p>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {featured.map((p) => <ProjectCard key={p.slug} p={p} />)}
-          </div>
-        )}
       </section>
 
+      {/* SKILLS MARQUEE */}
+      <Reveal className="border-y border-line py-6 overflow-hidden bg-surface/40">
+        <div className="marquee-track">
+          {[...SKILLS, ...SKILLS].map((s, i) => (
+            <span
+              key={i}
+              className="font-mono text-sm text-soft mx-6 whitespace-nowrap flex items-center gap-6"
+            >
+              {s}
+              <span className="text-mint">◆</span>
+            </span>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* ABOUT */}
+      <Reveal>
+        <section className="container-narrow py-24">
+          <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-start">
+            <div>
+              <p className="eyebrow mb-4">About</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-semibold text-body tracking-tight">
+                The short version.
+              </h2>
+            </div>
+            <div className="text-body text-lg space-y-5 leading-relaxed">
+              <p>
+                I'm a backend engineer at <a className="text-mint hover:underline" href="https://amalitech.com">AmaliTech Ghana</a>,
+                where I build Spring Boot services for financial applications. Before that I finished an MPhil in Computer
+                Science at KNUST and spent a couple of years teaching over 1,300 undergraduates the shape of a well-written
+                algorithm.
+              </p>
+              <p className="text-soft">
+                I care about systems that stay standing when parts of them fall over — clear service boundaries,
+                honest failure modes, and the small architectural decisions that let a team ship on a Tuesday afternoon
+                without holding their breath.
+              </p>
+              <p className="text-soft">
+                Outside of work: leading the KNUST IoT Hub, mentoring at hackathons, and occasionally writing about what I'm learning.
+              </p>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* FEATURED WORK */}
+      <Reveal>
+        <section className="container-narrow py-24">
+          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+            <div>
+              <p className="eyebrow mb-4">Selected work</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-semibold text-body tracking-tight">
+                Systems I've built.
+              </h2>
+            </div>
+            <Link
+              to="/projects"
+              className="font-mono text-sm text-mint hover:underline"
+            >
+              All projects →
+            </Link>
+          </div>
+          {featured.length === 0 ? (
+            <p className="text-soft">
+              Case studies are being written — everything lives on{" "}
+              <a href={CONFIG.socials.github} className="text-mint underline">GitHub</a> meanwhile.
+            </p>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {featured.map((p, i) => <ProjectCard key={p.slug} p={p} index={i} />)}
+            </div>
+          )}
+        </section>
+      </Reveal>
+
+      {/* WRITING */}
       {posts.length > 0 && (
-        <>
-          <KenteRule />
-          <section className="py-12">
-            <div className="flex items-end justify-between mb-6">
+        <Reveal>
+          <section className="container-narrow py-24 border-t border-line">
+            <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
               <div>
-                <p className="eyebrow mb-3">From the desk</p>
-                <h2 className="font-display italic text-3xl text-ink dark:text-ink-dk">Recent writing.</h2>
+                <p className="eyebrow mb-4">Notes</p>
+                <h2 className="font-display text-3xl sm:text-4xl font-semibold text-body tracking-tight">
+                  Recent writing.
+                </h2>
               </div>
-              <Link to="/blog" className="text-sm text-brass-deep dark:text-brass hover:underline">
+              <Link to="/blog" className="font-mono text-sm text-mint hover:underline">
                 All posts →
               </Link>
             </div>
-            <div>
-              {posts.map((p) => <PostRow key={p.slug} post={p} />)}
-            </div>
+            <div>{posts.map((p) => <PostRow key={p.slug} post={p} />)}</div>
           </section>
-        </>
+        </Reveal>
       )}
 
-      <KenteRule />
+      {/* CTA */}
+      <Reveal>
+        <section className="container-narrow py-32 text-center border-t border-line">
+          <p className="eyebrow mb-6 justify-center">Say hi</p>
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-body tracking-tight max-w-2xl mx-auto">
+            Have a backend problem worth solving?
+          </h2>
+          <p className="mt-6 text-soft text-lg max-w-lg mx-auto">
+            I'm open to backend engineering roles and thoughtful fintech problems.
+          </p>
+          <a
+            href={`mailto:${CONFIG.socials.email}`}
+            className="btn-primary mt-10 text-lg"
+          >
+            {CONFIG.socials.email}
+            <span aria-hidden>→</span>
+          </a>
+        </section>
+      </Reveal>
+    </>
+  );
+}
 
-      <section className="py-16 text-center">
-        <p className="eyebrow mb-4">Get in touch</p>
-        <h2 className="font-display italic text-4xl sm:text-5xl text-ink dark:text-ink-dk">
-          Want to build something together?
-        </h2>
-        <p className="mt-4 text-ink-soft dark:text-ink-soft-dk max-w-lg mx-auto">
-          I'm open to backend roles and thoughtful fintech problems. Fastest way to reach me is email.
-        </p>
-        <a
-          href={`mailto:${CONFIG.socials.email}`}
-          className="mt-6 inline-block font-mono text-brass-deep dark:text-brass underline underline-offset-4"
-        >
-          {CONFIG.socials.email}
-        </a>
-      </section>
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="font-display text-3xl sm:text-4xl font-bold text-body tracking-tight">{value}</p>
+      <p className="font-mono text-xs uppercase tracking-wider text-mute mt-1">{label}</p>
     </div>
   );
 }

@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Linus Tabari — Backend Engineer</title>
-    <meta name="description" content="Backend engineer in Kumasi, Ghana. Spring Boot microservices for fintech, teaching, and independent projects." />
+    <meta name="description" content="Backend engineer in Kumasi, Ghana. Spring Boot microservices for fintech." />
     <meta property="og:title" content="Linus Tabari — Backend Engineer" />
-    <meta property="og:description" content="Backend engineer in Kumasi, Ghana. Spring Boot microservices for fintech, teaching, and independent projects." />
+    <meta property="og:description" content="Backend engineer in Kumasi, Ghana. Spring Boot microservices for fintech." />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0a0b" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <!-- SPA redirect: 404.html stashes the requested path; index restores it. -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <script>
       (function () {
         var l = window.location;
@@ -21,6 +21,9 @@
           window.history.replaceState(null, '', l.pathname.slice(0, -1) + decoded + l.hash);
         }
       })();
+      // Theme init — default dark, respect saved preference
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light') document.documentElement.classList.remove('dark');
     </script>
   </head>
   <body>
