@@ -16,7 +16,7 @@ const SKILLS = [
   "Git", "GitHub Actions", "Kubernetes", "Redis", "WebSocket",
 ];
 
-const ROLES = ["Software Engineer", "Backend Developer", "Tutor", "Farmer"];
+const ROLES = ["Software Engineer", "Backend Developer", "Tutor"];
 
 export default function Home() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
@@ -60,9 +60,9 @@ export default function Home() {
           </p>
 
           <p className="mt-8 text-lg sm:text-xl text-body max-w-2xl leading-relaxed">
-            I build the quiet infrastructure behind financial products —
-            Spring Boot services that stay standing when parts of them fall over.
-            <span className="text-soft"> Before that, I taught 1,300+ students to write their first algorithms.</span>
+            I build the quiet infrastructure behind scalable products —
+            Spring Boot services, python FastAPI, Django, that stay standing when parts of them fall over.
+            <span className="text-soft"> Before that, I taught 1,300+ students to write their first algorithms and start their journeys into programming.</span>
           </p>
 
           <div className="mt-10 flex flex-wrap gap-3">
@@ -112,8 +112,7 @@ export default function Home() {
             </div>
             <div className="text-body text-lg space-y-5 leading-relaxed">
               <p>
-                I'm a backend engineer at <a className="text-mint hover:underline" href="https://amalitech.com">AmaliTech Ghana</a>,
-                where I build Spring Boot services for financial applications. Before that I finished an MPhil in Computer
+                I'm a Software engineer constantly learning a build products for clients and self. I finished an MPhil in Computer
                 Science at KNUST and spent a couple of years teaching over 1,300 undergraduates the shape of a well-written
                 algorithm.
               </p>

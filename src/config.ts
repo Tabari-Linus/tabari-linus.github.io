@@ -2,10 +2,10 @@
 
 export const CONFIG = {
   siteTitle: "Linus Tabari",
-  siteRole: "Backend Engineer",
+  siteRole: "Software Developer",
   siteLocation: "Kumasi, Ghana",
   tagline:
-    "I build the quiet infrastructure behind financial products — and I've helped 1,300+ people write their first line of code along the way.",
+    "I build the quiet infrastructure behind scalable products — and I've helped 1,300+ people write their first line of code along the way.",
 
   // GitHub identity: used by admin for API calls AND as the tracked issue author.
   githubOwner: "Tabari-Linus",

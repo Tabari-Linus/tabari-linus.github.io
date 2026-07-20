@@ -20,7 +20,7 @@ export const CV: {
   bio: [
     "I'm a software engineer with experience building scalable applications. I work primarily with Java and Python — building backends that stay standing when parts of them fall over.",
     "I've taught and mentored over 1,300 undergraduates in computer science and IT, and I lead the KNUST IoT Hub chapter. The work I care most about tends to sit where good engineering meets people learning to do it themselves.",
-    "Beyond the day job, I contribute to open-source agricultural supply-chain work with ESOG Africa and occasionally write about what I'm learning.",
+    "Beyond the day job, I contribute to agricultural supply-chain work and occasionally write about what I'm learning.",
   ],
 
   techStack: [
