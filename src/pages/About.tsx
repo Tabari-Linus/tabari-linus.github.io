@@ -1,4 +1,14 @@
 import { useState } from "react";
+import type { IconType } from "react-icons";
+import { FaAws, FaJava } from "react-icons/fa6";
+import {
+  SiAngular, SiApachekafka, SiBootstrap, SiCplusplus, SiCss, SiDjango, SiDocker,
+  SiFastapi, SiFigma, SiFirebase, SiGit, SiGithubactions, SiHtml5, SiJavascript,
+  SiJsonwebtokens, SiJupyter, SiMui, SiNumpy, SiPandas, SiPostgresql, SiPython,
+  SiReact, SiRedis, SiSpring, SiSpringboot, SiSpringsecurity, SiStreamlit,
+  SiTailwindcss, SiTensorflow, SiTypescript, SiOpencv,
+} from "react-icons/si";
+import { TbApi, TbChartLine, TbCode, TbDatabase, TbLambda, TbPresentationAnalytics } from "react-icons/tb";
 import Reveal from "../components/Reveal";
 import ResumeExplorer from "../components/ResumeExplorer";
 import ResumeModal from "../components/ResumeModal";
@@ -6,6 +16,54 @@ import { CV } from "../data/cv";
 import { CONFIG } from "../config";
 
 const RESUME_URL = "/cv.pdf"; // Drop your PDF at public/cv.pdf
+
+const SKILL_ICONS: Record<string, IconType> = {
+  Java: FaJava,
+  Python: SiPython,
+  JavaScript: SiJavascript,
+  SQL: TbDatabase,
+  "C++": SiCplusplus,
+
+  "Spring Boot": SiSpringboot,
+  "Spring Cloud": SiSpring,
+  "Spring Security": SiSpringsecurity,
+  FastAPI: SiFastapi,
+  Django: SiDjango,
+  REST: TbApi,
+  JWT: SiJsonwebtokens,
+  Kafka: SiApachekafka,
+
+  HTML: SiHtml5,
+  CSS: SiCss,
+  Bootstrap: SiBootstrap,
+  "Material UI": SiMui,
+  React: SiReact,
+  Typescript: SiTypescript,
+  Angular: SiAngular,
+
+  PostgreSQL: SiPostgresql,
+  Redis: SiRedis,
+  TensorFlow: SiTensorflow,
+  OpenCV: SiOpencv,
+  Pandas: SiPandas,
+  NumPy: SiNumpy,
+  "Power BI": TbPresentationAnalytics,
+  Jupyter: SiJupyter,
+
+  Docker: SiDocker,
+  "AWS ECS": FaAws,
+  S3: FaAws,
+  Lambda: TbLambda,
+  "GitHub Actions": SiGithubactions,
+  Git: SiGit,
+  Firebase: SiFirebase,
+  PostGIS: SiPostgresql,
+
+  "Tailwind CSS": SiTailwindcss,
+  Figma: SiFigma,
+  Streamlit: SiStreamlit,
+  Matplotlib: TbChartLine,
+};
 
 export default function About() {
   const [resumeOpen, setResumeOpen] = useState(false);
@@ -52,7 +110,15 @@ export default function About() {
                     {group.group}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    {group.items.map((t) => <span key={t} className="chip">{t}</span>)}
+                    {group.items.map((t) => {
+                      const Icon = SKILL_ICONS[t] ?? TbCode;
+                      return (
+                        <span key={t} className="chip">
+                          <Icon aria-hidden size={13} />
+                          {t}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               ))}

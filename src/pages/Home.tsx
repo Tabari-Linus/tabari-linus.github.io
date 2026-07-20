@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
+import type { IconType } from "react-icons";
 import { Link } from "react-router-dom";
+import { FaAws, FaJava } from "react-icons/fa6";
+import {
+  SiApachekafka, SiDjango, SiDocker, SiFastapi, SiGit, SiGithubactions,
+  SiJsonwebtokens, SiKubernetes, SiOpencv, SiPostgresql, SiPython, SiRedis,
+  SiSpring, SiSpringboot, SiSpringsecurity, SiTensorflow,
+} from "react-icons/si";
+import { TbApi, TbPlugConnected } from "react-icons/tb";
 import { CONFIG } from "../config";
 import { loadManifest } from "../lib/content";
 import { fetchGithubStats, type GithubStats } from "../lib/github-public";
@@ -9,11 +17,28 @@ import PostRow from "../components/PostRow";
 import Reveal from "../components/Reveal";
 import Typewriter from "../components/Typewriter";
 
-const SKILLS = [
-  "Java", "Spring Boot", "Spring Cloud", "Kafka", "PostgreSQL", "PostGIS",
-  "Docker", "AWS ECS", "REST APIs", "JWT", "Spring Security",
-  "Python", "FastAPI", "Django", "TensorFlow", "OpenCV",
-  "Git", "GitHub Actions", "Kubernetes", "Redis", "WebSocket",
+const SKILLS: { name: string; icon: IconType }[] = [
+  { name: "Java", icon: FaJava },
+  { name: "Spring Boot", icon: SiSpringboot },
+  { name: "Spring Cloud", icon: SiSpring },
+  { name: "Kafka", icon: SiApachekafka },
+  { name: "PostgreSQL", icon: SiPostgresql },
+  { name: "PostGIS", icon: SiPostgresql },
+  { name: "Docker", icon: SiDocker },
+  { name: "AWS ECS", icon: FaAws },
+  { name: "REST APIs", icon: TbApi },
+  { name: "JWT", icon: SiJsonwebtokens },
+  { name: "Spring Security", icon: SiSpringsecurity },
+  { name: "Python", icon: SiPython },
+  { name: "FastAPI", icon: SiFastapi },
+  { name: "Django", icon: SiDjango },
+  { name: "TensorFlow", icon: SiTensorflow },
+  { name: "OpenCV", icon: SiOpencv },
+  { name: "Git", icon: SiGit },
+  { name: "GitHub Actions", icon: SiGithubactions },
+  { name: "Kubernetes", icon: SiKubernetes },
+  { name: "Redis", icon: SiRedis },
+  { name: "WebSocket", icon: TbPlugConnected },
 ];
 
 const ROLES = ["Software Engineer", "Backend Developer", "Tutor"];
@@ -111,7 +136,10 @@ export default function Home() {
               key={i}
               className="font-mono text-sm text-soft mx-6 whitespace-nowrap flex items-center gap-6"
             >
-              {s}
+              <span className="inline-flex items-center gap-2">
+                <s.icon className="text-mint" size={16} aria-hidden />
+                {s.name}
+              </span>
               <span className="text-mint">◆</span>
             </span>
           ))}

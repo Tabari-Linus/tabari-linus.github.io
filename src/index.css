@@ -133,6 +133,7 @@ html:not(.dark) .border-line-strong { border-color: var(--color-line-strong-l); 
 .chip {
   display: inline-flex;
   align-items: center;
+  gap: 0.4rem;
   padding: 0.3rem 0.7rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
