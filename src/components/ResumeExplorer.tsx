@@ -22,7 +22,7 @@ export default function ResumeExplorer({ resumeUrl }: { resumeUrl: string }) {
     <div>
       {/* The deck stage */}
       <div
-        className="relative mx-auto flex items-center justify-center"
+        className="relative mx-auto flex items-center justify-center overflow-hidden"
         style={{ height: 460, maxWidth: 720 }}
       >
         {CARDS.map((card, i) => {
@@ -47,9 +47,9 @@ export default function ResumeExplorer({ resumeUrl }: { resumeUrl: string }) {
               aria-label={`Show ${card.label} card`}
               aria-current={isFront ? "true" : undefined}
               tabIndex={abs > 3 ? -1 : 0}
-              className="absolute left-1/2 top-0 -translate-x-1/2 rounded-2xl border transition-all duration-500 ease-out text-left will-change-transform"
+              className="absolute left-1/2 top-0 rounded-2xl border transition-all duration-500 ease-out text-left will-change-transform"
               style={{
-                width: "min(90vw, 380px)",
+                width: "min(68vw, 380px)",
                 height: 420,
                 transform: `translate(-50%, ${ty}px) translateX(${tx}px) rotate(${rot}deg) scale(${scale})`,
                 zIndex,
