@@ -7,6 +7,7 @@ import type { Manifest } from "../types";
 import ProjectCard from "../components/ProjectCard";
 import PostRow from "../components/PostRow";
 import Reveal from "../components/Reveal";
+import Typewriter from "../components/Typewriter";
 
 const SKILLS = [
   "Java", "Spring Boot", "Spring Cloud", "Kafka", "PostgreSQL", "PostGIS",
@@ -15,25 +16,15 @@ const SKILLS = [
   "Git", "GitHub Actions", "Kubernetes", "Redis", "WebSocket",
 ];
 
+const ROLES = ["Software Engineer", "Backend Developer", "Tutor", "Farmer"];
+
 export default function Home() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [stats, setStats] = useState<GithubStats | null>(null);
-  const [typedTitle, setTypedTitle] = useState("");
-  const fullTitle = "Backend Engineer";
 
   useEffect(() => {
     loadManifest().then(setManifest);
     fetchGithubStats().then(setStats);
-  }, []);
-
-  useEffect(() => {
-    let i = 0;
-    const id = setInterval(() => {
-      if (i > fullTitle.length) { clearInterval(id); return; }
-      setTypedTitle(fullTitle.slice(0, i));
-      i++;
-    }, 60);
-    return () => clearInterval(id);
   }, []);
 
   const featured = (manifest?.projects ?? [])
@@ -64,8 +55,7 @@ export default function Home() {
           </h1>
 
           <p className="mt-8 text-xl sm:text-2xl text-soft font-mono">
-            {typedTitle}
-            <span className="cursor-blink" />
+            <Typewriter words={ROLES} className="text-mint" />
             <span className="text-mute">  ·  {CONFIG.siteLocation}</span>
           </p>
 

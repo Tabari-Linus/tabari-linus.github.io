@@ -352,3 +352,10 @@ html:not(.dark) .prose-dev pre {
 .text-mint    { color: var(--color-mint); }
 .bg-mint      { background: var(--color-mint); }
 .border-mint  { border-color: var(--color-mint); }
+
+/* Résumé section swap */
+@keyframes fadeSwap {
+  0%   { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.fade-swap { animation: fadeSwap 0.35s cubic-bezier(0.16,1,0.3,1) both; }

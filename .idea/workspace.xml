@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="281765ca-6ee1-4466-a158-76e289e8d9d4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Nav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/home/mr-lii/Desktop/work/Application/portfolio/tabari-linus.github.io" value="3GboFVBXM0U544ST4FwQrTJJlFT" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Tabari-Linus&quot;
+  }
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1784286086" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1784249562" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Tabari-Linus/tabari-linus.github.io.git&quot;,
+    &quot;accountId&quot;: &quot;9e9df45c-1c8f-4037-bc5a-3c673bfe126b&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0046340779154561" />
+      <entry key="MS500" value="1.6296763050950829" />
+      <entry key="S2" value="3.966005399158304" />
+      <entry key="S5" value="6.153961138501737" />
+      <entry key="S10" value="7.376159721839437" />
+      <entry key="S30" value="8.405970442535464" />
+      <entry key="S60" value="8.69580574085779" />
+      <entry key="M2" value="8.846060756136474" />
+      <entry key="M5" value="8.937976000230595" />
+      <entry key="M10" value="8.968912760569562" />
+      <entry key="M15" value="8.979258415258451" />
+      <entry key="M30" value="8.989768975592959" />
+      <entry key="H1" value="9.091641753254857" />
+      <entry key="H2" value="11.611214212405612" />
+      <entry key="H4" value="23.032181645104863" />
+      <entry key="D1" value="67.43737151215612" />
+      <entry key="W1" value="83.84220592013907" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="1.0134304514953477E-166" />
+      <entry key="M2" value="1.0066928287692068E-83" />
+      <entry key="M5" value="6.326431207517875E-34" />
+      <entry key="M10" value="2.5152397912560694E-17" />
+      <entry key="M15" value="8.584590762302977E-12" />
+      <entry key="M30" value="2.9299472285867163E-6" />
+      <entry key="H1" value="0.0017117088620985511" />
+      <entry key="H2" value="0.0413728034111607" />
+      <entry key="H4" value="0.20340305654330937" />
+      <entry key="D1" value="0.7668779413386533" />
+      <entry key="W1" value="0.9627916626660118" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.07033143199201924" />
+      <entry key="MS500" value="1.1993695440081737" />
+      <entry key="S2" value="3.7797492053483994" />
+      <entry key="S5" value="6.03719917865552" />
+      <entry key="S10" value="7.3043902636558204" />
+      <entry key="S30" value="8.378083267502747" />
+      <entry key="S60" value="8.681290096510146" />
+      <entry key="M2" value="8.838653523585934" />
+      <entry key="M5" value="8.934976400128448" />
+      <entry key="M10" value="8.967406770674456" />
+      <entry key="M15" value="8.97825304110327" />
+      <entry key="M30" value="8.989268524251628" />
+      <entry key="H1" value="9.093100816259682" />
+      <entry key="H2" value="11.652450570109592" />
+      <entry key="H4" value="23.23549383892012" />
+      <entry key="D1" value="68.20421980653616" />
+      <entry key="W1" value="84.80499258663464" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3GboFVBXM0U544ST4FwQrTJJlFT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mr-lii/Desktop/work/Application/portfolio/tabari-linus.github.io&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.258" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.258" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="281765ca-6ee1-4466-a158-76e289e8d9d4" name="Changes" comment="" />
+      <created>1784249526049</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1784249526049</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
