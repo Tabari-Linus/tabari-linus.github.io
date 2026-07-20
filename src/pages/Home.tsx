@@ -46,33 +46,51 @@ export default function Home() {
         />
 
         <div className="container-narrow relative min-h-[85vh] flex flex-col justify-center pt-20 pb-16">
-          <p className="eyebrow mb-6">
-            <span className="font-mono">$ whoami</span>
-          </p>
+          <div className="grid md:grid-cols-[1fr_auto] gap-10 md:gap-16 items-center">
+            <div className="order-2 md:order-1">
+              <p className="eyebrow mb-6">
+                <span className="font-mono">$ whoami</span>
+              </p>
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-body leading-[1.02]">
-            Linus <span className="text-mint">Tabari</span>.
-          </h1>
+              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-body leading-[1.02]">
+                Linus <span className="text-mint">Tabari</span>.
+              </h1>
 
-          <p className="mt-8 text-xl sm:text-2xl text-soft font-mono">
-            <Typewriter words={ROLES} className="text-mint" />
-            <span className="text-mute">  ·  {CONFIG.siteLocation}</span>
-          </p>
+              <p className="mt-8 text-xl sm:text-2xl text-soft font-mono">
+                <Typewriter words={ROLES} className="text-mint" />
+                <span className="text-mute">  ·  {CONFIG.siteLocation}</span>
+              </p>
 
-          <p className="mt-8 text-lg sm:text-xl text-body max-w-2xl leading-relaxed">
-            I build the quiet infrastructure behind scalable products —
-            Spring Boot services, python FastAPI, Django, that stay standing when parts of them fall over.
-            <span className="text-soft"> Before that, I taught 1,300+ students to write their first algorithms and start their journeys into programming.</span>
-          </p>
+              <p className="mt-8 text-lg sm:text-xl text-body max-w-2xl leading-relaxed">
+                I build the quiet infrastructure behind scalable products —
+                Spring Boot services, python FastAPI, Django, that stay standing when parts of them fall over.
+                <span className="text-soft"> Before that, I taught 1,300+ students to write their first algorithms and start their journeys into programming.</span>
+              </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link to="/projects" className="btn-primary">
-              See my work
-              <span aria-hidden>→</span>
-            </Link>
-            <a href={`mailto:${CONFIG.socials.email}`} className="btn-secondary">
-              Get in touch
-            </a>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link to="/projects" className="btn-primary">
+                  See my work
+                  <span aria-hidden>→</span>
+                </Link>
+                <a href={`mailto:${CONFIG.socials.email}`} className="btn-secondary">
+                  Get in touch
+                </a>
+              </div>
+            </div>
+
+            <div className="order-1 md:order-2 justify-self-center md:justify-self-end">
+              <div className="relative">
+                <div
+                  className="absolute inset-0 rounded-full blur-2xl opacity-40 pointer-events-none"
+                  style={{ background: "var(--color-mint)" }}
+                />
+                <img
+                  src="/images/profile-avatar.png"
+                  alt="Linus Tabari"
+                  className="relative w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full object-cover border-2 border-mint/40 shadow-2xl"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Quick stats bar */}
