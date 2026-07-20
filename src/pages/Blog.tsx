@@ -21,7 +21,7 @@ export default function Blog() {
             Notes.
           </h1>
           <p className="mt-6 text-lg text-soft">
-            On backend engineering, distributed systems, and teaching people to code.
+            On Software engineering, distributed systems, AI and teaching people to code.
           </p>
         </header>
 

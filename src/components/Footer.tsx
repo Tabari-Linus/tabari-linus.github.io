@@ -39,7 +39,7 @@ export default function Footer() {
 
         <div className="mt-14 pt-6 border-t border-line flex flex-wrap gap-4 items-center justify-between font-mono text-xs text-mute">
           <p>© {new Date().getFullYear()} {CONFIG.siteTitle} · {CONFIG.siteLocation}</p>
-          <p>Built with React · Tailwind · Deployed on GitHub Pages</p>
+          <p>Built for your view</p>
         </div>
       </div>
     </footer>

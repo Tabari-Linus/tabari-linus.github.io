@@ -44,6 +44,20 @@
 
 @custom-variant light (&:where(:not(.dark), :not(.dark) *));
 
+/* Light mode: repoint the base variables themselves so components that
+   read var(--color-bg-1) etc. directly (e.g. inline styles) stay in sync
+   with .dark, not just the utility classes below. */
+html:not(.dark) {
+  --color-bg-1: var(--color-bg-1-l);
+  --color-bg-2: var(--color-bg-2-l);
+  --color-bg-3: var(--color-bg-2-l);
+  --color-line: var(--color-line-l);
+  --color-line-strong: var(--color-line-strong-l);
+  --color-text: var(--color-text-l);
+  --color-text-soft: var(--color-text-soft-l);
+  --color-text-mute: var(--color-text-mute-l);
+}
+
 /* Baseline */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {

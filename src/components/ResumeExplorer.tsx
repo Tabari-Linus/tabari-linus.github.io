@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { CV } from "../data/cv";
+import ResumeModal from "./ResumeModal";
 
 type CardKey =
   | "about" | "academic" | "work" | "volunteering"
@@ -14,6 +15,7 @@ type CardKey =
 export default function ResumeExplorer({ resumeUrl }: { resumeUrl: string }) {
   const CARDS = useMemo(() => buildCards(), []);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [resumeOpen, setResumeOpen] = useState(false);
   const active = CARDS[activeIndex];
 
   return (
@@ -63,7 +65,7 @@ export default function ResumeExplorer({ resumeUrl }: { resumeUrl: string }) {
                   : "0 6px 20px -8px rgba(0,0,0,0.4)",
               }}
             >
-              <CardBody card={card} isFront={isFront} resumeUrl={resumeUrl} />
+              <CardBody card={card} isFront={isFront} onView={() => setResumeOpen(true)} />
             </button>
           );
         })}
@@ -92,6 +94,8 @@ export default function ResumeExplorer({ resumeUrl }: { resumeUrl: string }) {
 
       {/* Screen-reader-only current announcement */}
       <p className="sr-only" aria-live="polite">Showing {active.label}</p>
+
+      <ResumeModal resumeUrl={resumeUrl} open={resumeOpen} onClose={() => setResumeOpen(false)} />
     </div>
   );
 }
@@ -177,11 +181,11 @@ function buildCards(): Card[] {
 function CardBody({
   card,
   isFront,
-  resumeUrl,
+  onView,
 }: {
   card: Card;
   isFront: boolean;
-  resumeUrl: string;
+  onView: () => void;
 }) {
   return (
     <div className="h-full p-7 flex flex-col">
@@ -207,23 +211,16 @@ function CardBody({
       {/* Résumé-only actions — the "small button aside the resume card" */}
       {card.key === "resume" && isFront && (
         <div className="mt-4 flex gap-2 flex-wrap">
-          <a
-            href={resumeUrl}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md border border-line text-body hover:border-mint hover:text-mint transition-colors text-sm font-mono"
-          >
-            View résumé <span aria-hidden>↗</span>
-          </a>
-          <a
-            href={resumeUrl}
-            download
-            onClick={(e) => e.stopPropagation()}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onView();
+            }}
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-mint text-black hover:opacity-90 transition-opacity text-sm font-mono font-semibold"
           >
-            Download PDF <span aria-hidden>↓</span>
-          </a>
+            View résumé <span aria-hidden>↗</span>
+          </button>
         </div>
       )}
 

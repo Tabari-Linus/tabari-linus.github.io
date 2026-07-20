@@ -26,8 +26,9 @@ export const CV: {
   techStack: [
     { group: "Languages",       items: ["Java", "Python", "JavaScript", "SQL", "C++"] },
     { group: "Backend & APIs",  items: ["Spring Boot", "Spring Cloud", "Spring Security", "FastAPI", "Django", "REST", "JWT", "Kafka"] },
+    { group: "Frontend & UI",   items: ["HTML", "CSS", "Bootstrap", "Material UI", "React Js", "Typescript", "Angular"] },
     { group: "Data & ML",       items: ["PostgreSQL", "Redis", "TensorFlow", "OpenCV", "Pandas", "NumPy", "Power BI", "Jupyter"] },
-    { group: "Cloud & DevOps",  items: ["Docker", "AWS ECS", "GitHub Actions", "Git", "Firebase", "PostGIS"] },
+    { group: "Cloud & DevOps",  items: ["Docker", "AWS ECS", "S3", "Lambda", "GitHub Actions", "Git", "Firebase", "PostGIS"] },
     { group: "Also",            items: ["Tailwind CSS", "React", "Figma", "Streamlit", "Matplotlib"] },
   ],
 

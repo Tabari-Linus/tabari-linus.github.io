@@ -1,11 +1,15 @@
+import { useState } from "react";
 import Reveal from "../components/Reveal";
 import ResumeExplorer from "../components/ResumeExplorer";
+import ResumeModal from "../components/ResumeModal";
 import { CV } from "../data/cv";
 import { CONFIG } from "../config";
 
 const RESUME_URL = "/cv.pdf"; // Drop your PDF at public/cv.pdf
 
 export default function About() {
+  const [resumeOpen, setResumeOpen] = useState(false);
+
   return (
     <>
       {/* Hero */}
@@ -21,12 +25,9 @@ export default function About() {
             ))}
           </div>
           <div className="flex gap-3">
-            <a href={RESUME_URL} target="_blank" rel="noreferrer" className="btn-secondary">
+            <button type="button" onClick={() => setResumeOpen(true)} className="btn-primary">
               View résumé ↗
-            </a>
-            <a href={RESUME_URL} download className="btn-primary">
-              Download ↓
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -70,7 +71,7 @@ export default function About() {
                 Where I've done the work.
               </h2>
               <p className="mt-4 text-soft leading-relaxed">
-                The résumé explorer below has everything — schools, volunteering, awards, certificates. This is the short version.
+                Explorer my resume — schools, volunteering, awards, certificates.
               </p>
             </div>
             <ol className="relative border-l border-line ml-2 space-y-8 py-1">
@@ -100,7 +101,7 @@ export default function About() {
               A short story, told in cards.
             </h2>
             <p className="mt-4 text-soft max-w-xl mx-auto leading-relaxed">
-              Click any card in the deck to bring it forward. For the full detail — dates, courses, everything — grab the PDF from the résumé card.
+              Click any card in the deck to bring it forward. For the full detail — dates, courses, everything — preview it from the résumé card.
             </p>
           </div>
           <ResumeExplorer resumeUrl={RESUME_URL} />
@@ -119,6 +120,8 @@ export default function About() {
           </a>
         </section>
       </Reveal>
+
+      <ResumeModal resumeUrl={RESUME_URL} open={resumeOpen} onClose={() => setResumeOpen(false)} />
     </>
   );
 }

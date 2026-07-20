@@ -17,7 +17,7 @@ export default function Projects() {
         <header className="mb-14 max-w-3xl">
           <p className="eyebrow mb-5">Work</p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-bold text-body tracking-tight leading-[1.05]">
-            Case studies.
+            Projects.
           </h1>
           <p className="mt-6 text-lg text-soft">
             Systems I've designed and shipped — with the architecture decisions and trade-offs behind each.
